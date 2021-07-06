@@ -28,4 +28,8 @@ public class Score {
             this.score -= 1;
         }
     }
+
+    public void resetScore() {
+        this.score = 0;
+    }
 }

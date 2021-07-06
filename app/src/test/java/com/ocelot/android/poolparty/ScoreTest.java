@@ -58,5 +58,14 @@ public class ScoreTest {
         assertEquals(expected, score.getScore());
     }
 
+    @Test
+    public void testResetScore() throws Exception {
+        int expected = 0;
+
+        Score score = new Score(5);
+        score.resetScore();
+
+        assertEquals(expected, score.getScore());
+    }
 
 }
