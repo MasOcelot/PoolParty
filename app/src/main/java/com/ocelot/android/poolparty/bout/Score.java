@@ -1,35 +1,49 @@
 package com.ocelot.android.poolparty.bout;
 
+import androidx.annotation.Nullable;
+
 public class Score {
-    private int score;
+    private int value;
 
     public Score(int score) {
-        this.score = score;
+        this.value = score;
     }
 
     public Score() {
         this(0);
     }
 
-    public int getScore() {
-        return score;
+    public int getValue() {
+        return value;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public void increaseScore() {
-        this.score += 1;
+        this.value += 1;
     }
 
     public void decreaseScore() {
-        if (score > 0) {
-            this.score -= 1;
+        if (value > 0) {
+            this.value -= 1;
         }
     }
 
     public void resetScore() {
-        this.score = 0;
+        this.value = 0;
     }
+
+    public boolean isEqual(Score score) throws NullPointerException {
+        if (score != null) {
+            if (score.value == this.value) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        throw new NullPointerException("Parameter 'value' cannot be null.");
+    }
+
 }

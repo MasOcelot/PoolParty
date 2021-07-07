@@ -6,6 +6,8 @@ import com.ocelot.android.poolparty.bout.Score;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ScoreTest {
     @Test
@@ -13,7 +15,7 @@ public class ScoreTest {
         int expected = 0;
         Score score  = new Score();
 
-        assertEquals(expected, score.getScore());
+        assertEquals(expected, score.getValue());
     }
 
     @Test
@@ -21,9 +23,9 @@ public class ScoreTest {
         int expected = 0;
         int input = 0;
         Score score = new Score();
-        score.setScore(input);
+        score.setValue(input);
 
-        assertEquals(expected, score.getScore());
+        assertEquals(expected, score.getValue());
     }
 
     @Test
@@ -33,7 +35,7 @@ public class ScoreTest {
         Score score = new Score();
         score.increaseScore();
 
-        assertEquals(expected, score.getScore());
+        assertEquals(expected, score.getValue());
     }
 
     @Test
@@ -41,10 +43,10 @@ public class ScoreTest {
         int expected = 4;
 
         Score score = new Score();
-        score.setScore(5);
+        score.setValue(5);
         score.decreaseScore();
 
-        assertEquals(expected, score.getScore());
+        assertEquals(expected, score.getValue());
     }
 
     @Test
@@ -52,10 +54,10 @@ public class ScoreTest {
         int expected = 0;
 
         Score score = new Score();
-        score.setScore(0);
+        score.setValue(0);
         score.decreaseScore();
 
-        assertEquals(expected, score.getScore());
+        assertEquals(expected, score.getValue());
     }
 
     @Test
@@ -65,7 +67,23 @@ public class ScoreTest {
         Score score = new Score(5);
         score.resetScore();
 
-        assertEquals(expected, score.getScore());
+        assertEquals(expected, score.getValue());
+    }
+
+    @Test
+    public void testIsEqualTrue() throws Exception {
+        Score score1 = new Score(5);
+        Score score2 = new Score(5);
+
+        assertTrue(score1.isEqual(score2));
+    }
+
+    @Test
+    public void testIsEqualFalse() throws Exception {
+        Score score1 = new Score(0);
+        Score score2 = new Score(1);
+
+        assertFalse(score1.isEqual(score2));
     }
 
 }
