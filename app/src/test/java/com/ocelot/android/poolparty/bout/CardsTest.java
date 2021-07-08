@@ -17,7 +17,7 @@ public class CardsTest {
     public void addYellow() {
         int expectedYellow = 1;
         int expectedRed = 0;
-        cards.addYellow();
+        assertEquals(CardType.YELLOW, cards.addYellow());
 
         assertEquals(expectedYellow, cards.getYellow());
         assertEquals(expectedRed, cards.getRed());
@@ -26,7 +26,7 @@ public class CardsTest {
     @Test
     public void addRed1() {
         int expectedRed = 1;
-        cards.addRed();
+        assertEquals(CardType.RED, cards.addRed());
 
         assertEquals(expectedRed, cards.getRed());
     }
@@ -36,7 +36,7 @@ public class CardsTest {
         int expectedYellow = 1;
         int expectedRed = 1;
         cards.addYellow();
-        cards.addYellow();
+        assertEquals(CardType.RED, cards.addYellow());
 
         assertEquals(expectedYellow, cards.getYellow());
         assertEquals(expectedRed, cards.getRed());
@@ -45,7 +45,7 @@ public class CardsTest {
     @Test
     public void addBlack() {
         int expectedBlack = 1;
-        cards.addBlack();
+        assertEquals(CardType.BLACK, cards.addBlack());
 
         assertEquals(expectedBlack, cards.getBlack());
     }
@@ -129,6 +129,7 @@ public class CardsTest {
         assertTrue(cards.isEqual(otherCards));
 
         otherCards.addRed();
+        otherCards.addRed();
         otherCards.addYellow();
         otherCards.setBlack(-1);
 
@@ -136,6 +137,9 @@ public class CardsTest {
 
         cards.addYellow();
         cards.addYellow();
+        cards.addYellow();
+
+        System.out.println(cards.toString());
 
         assertTrue(cards.isEqual(otherCards));
     }

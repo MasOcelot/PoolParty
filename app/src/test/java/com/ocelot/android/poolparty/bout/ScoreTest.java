@@ -1,4 +1,4 @@
-package com.ocelot.android.poolparty;
+package com.ocelot.android.poolparty.bout;
 
 
 import com.ocelot.android.poolparty.bout.Score;

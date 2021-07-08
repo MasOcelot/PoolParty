@@ -1,6 +1,6 @@
 package com.ocelot.android.poolparty.bout;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 public class Cards {
     private int yellow;
@@ -13,23 +13,23 @@ public class Cards {
         this.black = 0;
     }
 
-    public void addYellow() {
+    public CardType addYellow() {
         if (this.yellow == 0) {
             this.yellow++;
-            //Return Yellow
+            return CardType.YELLOW;
         } else {
-            this.addRed();
+            return this.addRed();
         }
     }
 
-    public void addRed() {
+    public CardType addRed() {
         this.red++;
-        // return Red
+        return CardType.RED;
     }
 
-    public void addBlack() {
+    public CardType addBlack() {
         this.black++;
-        // return Black
+        return CardType.BLACK;
     }
 
     public int getYellow() {
@@ -81,5 +81,15 @@ public class Cards {
         } else {
             throw new NullPointerException("Parameter 'cards' cannot be null.");
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String output = "";
+        output += "Yellow: " + this.yellow;
+        output += "\nRed: " + this.red;
+        output += "\nBlack: " + this.black;
+        return output;
     }
 }
