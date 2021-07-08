@@ -88,8 +88,8 @@ public class Cards {
     public String toString() {
         String output = "";
         output += "Yellow: " + this.yellow;
-        output += "\nRed: " + this.red;
-        output += "\nBlack: " + this.black;
+        output += " | Red: " + this.red;
+        output += " | Black: " + this.black;
         return output;
     }
 }
