@@ -1,6 +1,4 @@
-package com.ocelot.android.poolparty.bout;
-
-import androidx.annotation.Nullable;
+package com.ocelot.android.poolparty.fencer;
 
 public class Score {
     private int value;

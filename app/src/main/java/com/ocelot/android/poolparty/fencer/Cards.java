@@ -1,4 +1,4 @@
-package com.ocelot.android.poolparty.bout;
+package com.ocelot.android.poolparty.fencer;
 
 import androidx.annotation.NonNull;
 

@@ -1,7 +1,5 @@
-package com.ocelot.android.poolparty.bout;
+package com.ocelot.android.poolparty.fencer;
 
-
-import com.ocelot.android.poolparty.bout.Score;
 
 import org.junit.Test;
 
