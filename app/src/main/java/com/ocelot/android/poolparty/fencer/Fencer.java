@@ -3,18 +3,12 @@ package com.ocelot.android.poolparty.fencer;
 public class Fencer {
 
     private Score[] score;
-    private String firstName;
-    private String lastName;
-    private String club;
-    private Hand dominantHand;
-    private Rating rating;
+    private FencerID fencerID;
+    private CompetitiveSpecs compSpecs;
 
-    public Fencer(String firstName, String lastName, Hand dominantHand, Rating rating, int numCompetitors) {
+    public Fencer(String firstName, String lastName, Hand hand, int numCompetitors) {
         this.score = new Score[numCompetitors];
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dominantHand = dominantHand;
-        this.rating = rating;
+        this.fencerID = new FencerID(firstName, lastName, hand);
     }
 
 }
