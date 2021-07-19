@@ -84,4 +84,25 @@ public class ScoreTest {
         assertFalse(score1.isEqual(score2));
     }
 
+    @Test
+    public void testAddRedCard() throws Exception {
+        Score score = new Score();
+
+        assertEquals(CardType.RED, score.addCard(CardType.RED));
+    }
+
+    @Test
+    public void testAddTwoYellow() throws Exception {
+        Score score = new Score();
+        score.addCard(CardType.YELLOW);
+        assertEquals(CardType.RED, score.addCard(CardType.YELLOW));
+    }
+
+    @Test
+    public void testAddBlackCard() throws Exception {
+        Score score = new Score();
+
+        assertEquals(CardType.BLACK, score.addCard(CardType.BLACK));
+    }
+
 }
