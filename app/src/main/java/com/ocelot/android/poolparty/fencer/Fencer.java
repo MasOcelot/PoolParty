@@ -5,14 +5,15 @@ public class Fencer {
     private static int numFencers = 0;
 
     private int index;
-    private Score[] score;
+    private Score[] scores;
     private FencerID fencerID;
     private CompetitiveSpecs compSpecs;
 
     public Fencer(FencerID fencerID, int numCompetitors) {
         this.index = numFencers;
         numFencers++;
-        this.score = new Score[numCompetitors];
+        this.scores = new Score[numCompetitors];
+        initializeScores();
         this.fencerID = fencerID;
     }
 
@@ -59,4 +60,66 @@ public class Fencer {
         return fencerID.getHand();
     }
 
+    public CompetitiveSpecs getCompSpecs() {
+        if (this.compSpecs == null) {
+            compSpecs = new CompetitiveSpecs();
+        }
+        return compSpecs;
+    }
+
+    public void setCompSpecs(CompetitiveSpecs compSpecs) {
+        this.compSpecs = compSpecs;
+    }
+
+    public void setRating(Rating rating) {
+        if (this.compSpecs == null) {
+            compSpecs = new CompetitiveSpecs();
+        }
+        compSpecs.setRating(rating);
+    }
+
+    public Rating getRating() {
+        if (this.compSpecs == null) {
+            return null;
+        }
+        return compSpecs.getRating();
+    }
+
+    public void setClub(String club) {
+        if (this.compSpecs == null) {
+            compSpecs = new CompetitiveSpecs();
+        }
+        compSpecs.setClub(club);
+    }
+
+    public String getClub() {
+        if (this.compSpecs == null) {
+            return null;
+        }
+        return compSpecs.getClub();
+    }
+
+    private void initializeScores() {
+        for (int i=0; i<scores.length; i++) {
+            scores[i] = new Score();
+        }
+    }
+
+    public Score[] getScores() {
+        return scores;
+    }
+
+    public void setScore(int index, int score) {
+        if (scores[index] == null) {
+            return;
+        }
+        scores[index].setValue(score);
+    }
+
+    public int getScore(int index) {
+        if (scores[index] == null) {
+            return 0;
+        }
+        return scores[index].getValue();
+    }
 }

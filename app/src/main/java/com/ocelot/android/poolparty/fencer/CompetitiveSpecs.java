@@ -10,7 +10,7 @@ public class CompetitiveSpecs {
     }
 
     public CompetitiveSpecs() {
-        this("", Rating.U);
+        this("Unattached", Rating.U);
     }
 
     public void setClub(String club) {

@@ -10,7 +10,7 @@ public class FencerTest {
     @Before
     public void setUp() {
         FencerID fencerID = new FencerID();
-        fencer = new Fencer(fencerID);
+        fencer = new Fencer(fencerID, 2);
     }
 
     // Will only work without testIndexCounter()
@@ -56,6 +56,51 @@ public class FencerTest {
         assertEquals(expectedFirstName, fencer.getFirstName());
         assertEquals(expectedLastName, fencer.getLastName());
         assertEquals(expectedHand, fencer.getHand());
+    }
+
+    @Test
+    public void testEmptyCompSpecs1() {
+        assertNull(fencer.getRating());
+        assertNull(fencer.getClub());
+    }
+
+    @Test
+    public void testEmptyCompSpecs2() {
+        Rating expectedRating = Rating.U;
+        String expectedClub = "Unattached";
+
+        assertEquals(expectedRating, fencer.getCompSpecs().getRating());
+        assertEquals(expectedClub, fencer.getCompSpecs().getClub());
+    }
+
+    @Test
+    public void testRating() {
+        Rating expectedRating = Rating.A;
+        fencer.setRating(Rating.A);
+        assertEquals(expectedRating, fencer.getRating());
+    }
+
+    @Test
+    public void testClub() {
+        String expectedClub = "King of the Iron Fist";
+        fencer.setClub("King of the Iron Fist");
+        assertEquals(expectedClub, fencer.getClub());
+    }
+
+    @Test
+    public void testScores() {
+        int expectedScore = 0;
+        for (int i=0; i<fencer.getScores().length; i++) {
+            assertEquals(expectedScore, fencer.getScores()[i].getValue());
+        }
+    }
+
+    @Test
+    public void testScore() {
+        int expectedScore = 5;
+        fencer.setScore(1, 5);
+        assertEquals(expectedScore, fencer.getScore(1));
+        assertEquals(0, fencer.getScore(0));
     }
 
 }
