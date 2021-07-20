@@ -122,4 +122,26 @@ public class Fencer {
         }
         return scores[index].getValue();
     }
+
+    public void increaseScore(int index) {
+        this.scores[index].increaseScore();
+    }
+
+    public void decreaseScore(int index) {
+        this.scores[index].decreaseScore();
+    }
+
+    public Cards getCards(int index) {
+        if (scores[index] == null) {
+            return null;
+        }
+        return scores[index].getCards();
+    }
+
+    public CardType addCard(int index, CardType cardType) {
+        if (scores[index] == null) {
+            return CardType.NONE;
+        }
+        return scores[index].addCard(cardType);
+    }
 }
