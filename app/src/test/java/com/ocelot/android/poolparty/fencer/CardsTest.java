@@ -143,4 +143,28 @@ public class CardsTest {
 
         assertTrue(cards.isEqual(otherCards));
     }
+
+    @Test
+    public void removeBlack() {
+        int expectedValue = 1;
+        cards.setBlack(2);
+        cards.removeBlack();
+        assertEquals(expectedValue, cards.getBlack());
+    }
+
+    @Test
+    public void removeRed() {
+        int expectedValue = 0;
+        cards.setRed(1);
+        cards.removeRed();
+        assertEquals(expectedValue, cards.getRed());
+    }
+
+    @Test
+    public void removeYellow() {
+        int expectedValue = 0;
+        cards.setYellow(1);
+        cards.removeYellow();
+        assertEquals(expectedValue, cards.getYellow());
+    }
 }

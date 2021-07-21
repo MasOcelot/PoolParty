@@ -153,7 +153,26 @@ public class FencerTest {
 
     @Test
     public void testDecreaseCard() {
+        Cards expectedCards = new Cards();
+        expectedCards.setBlack(2);
+        expectedCards.setRed(1);
+        expectedCards.setYellow(0);
 
+        fencer.addCard(1, CardType.BLACK);
+        fencer.addCard(1, CardType.BLACK);
+        fencer.addCard(1, CardType.BLACK);
+        fencer.addCard(1, CardType.RED);
+        fencer.addCard(1, CardType.RED);
+        fencer.addCard(1, CardType.YELLOW);
+
+        System.out.println(fencer.getCards(1).toString());
+
+        fencer.removeCard(1, CardType.BLACK);
+        fencer.removeCard(1, CardType.RED);
+        fencer.removeCard(1, CardType.YELLOW);
+
+        assertTrue(expectedCards.isEqual(fencer.getCards(1)));
+        System.out.println(fencer.getCards(1).toString());
     }
 
 }

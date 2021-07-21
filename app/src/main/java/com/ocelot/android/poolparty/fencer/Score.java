@@ -66,6 +66,20 @@ public class Score {
         return this.cards;
     }
 
+    public void setCards(CardType cardType, int numCards) {
+        switch (cardType) {
+            case YELLOW:
+                cards.setYellow(numCards);
+                break;
+            case RED:
+                cards.setRed(numCards);
+                break;
+            case BLACK:
+                cards.setBlack(numCards);
+                break;
+        }
+    }
+
     public CardType addCard(CardType card){
         switch (card) {
             case YELLOW:
@@ -76,6 +90,20 @@ public class Score {
                 return this.cards.addBlack();
         }
         return CardType.NONE;
+    }
+
+    public void removeCard(CardType card) {
+        switch (card) {
+            case YELLOW:
+                this.cards.removeYellow();
+                break;
+            case RED:
+                this.cards.removeRed();
+                break;
+            case BLACK:
+                this.cards.removeBlack();
+                break;
+        }
     }
 
 

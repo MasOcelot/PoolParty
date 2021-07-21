@@ -144,4 +144,11 @@ public class Fencer {
         }
         return scores[index].addCard(cardType);
     }
+
+    public void removeCard(int index, CardType cardType) {
+        if (scores[index] == null) {
+            return;
+        }
+        this.scores[index].removeCard(cardType);
+    }
 }

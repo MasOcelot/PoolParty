@@ -70,6 +70,24 @@ public class Cards {
         this.black = black;
     }
 
+    public void removeYellow() {
+        if (yellow > 0) {
+            yellow--;
+        }
+    }
+
+    public void removeRed() {
+        if (red > 0) {
+            red--;
+        }
+    }
+
+    public void removeBlack() {
+        if (black > 0) {
+            black--;
+        }
+    }
+
     public boolean isEqual(Cards cards) {
         if (cards != null) {
             if (cards.getBlack() == this.getBlack() &&
