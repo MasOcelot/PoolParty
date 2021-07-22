@@ -175,4 +175,22 @@ public class FencerTest {
         System.out.println(fencer.getCards(1).toString());
     }
 
+    @Test
+    public void testDefeat() {
+        assertFalse(fencer.isVictor(1));
+    }
+
+    @Test
+    public void testVictory() {
+        fencer.setVictory(1);
+        assertTrue(fencer.isVictor(1));
+    }
+
+    @Test
+    public void testDefeatAlt() {
+        fencer.setVictory(1);
+        fencer.setVictory(1, false);
+        assertFalse(fencer.isVictor(1));
+    }
+
 }

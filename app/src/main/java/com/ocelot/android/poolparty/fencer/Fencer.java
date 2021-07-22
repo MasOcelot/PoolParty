@@ -151,4 +151,22 @@ public class Fencer {
         }
         this.scores[index].removeCard(cardType);
     }
+
+    public void setVictory(int index, boolean victory) {
+        if (scores[index] == null) {
+            return;
+        }
+        scores[index].setVictory(victory);
+    }
+
+    public void setVictory(int index) {
+        this.setVictory(index, true);
+    }
+
+    public boolean isVictor(int index) {
+        if (scores[index] == null) {
+            return false;
+        }
+        return scores[index].getVictory();
+    }
 }
