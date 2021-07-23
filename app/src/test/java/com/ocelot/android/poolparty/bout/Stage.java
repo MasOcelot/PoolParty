@@ -97,12 +97,12 @@ public enum Stage {
         }
 
         @Override
-        public Stage preboutState() {
+        public Stage preBoutState() {
             return PREBOUT;
         }
 
         @Override
-        public Stage postboutState() {
+        public Stage postBoutState() {
             return POSTBOUT;
         }
     },
