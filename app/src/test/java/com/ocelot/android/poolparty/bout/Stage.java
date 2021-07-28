@@ -106,7 +106,7 @@ public enum Stage {
             return POSTBOUT;
         }
     },
-    POSTBOUT{
+    POSTBOUT {
         @Override
         public Stage encounterState() {
             return ENCOUNTER;
