@@ -8,8 +8,6 @@ public class Bout {
     private Fencer leftFencer;
     private int rightIndex;
     private int leftIndex;
-    private int numEncounters;
-    private int scoreLimit;
     private StageTracker stageTracker;
 
     public Bout(Fencer rightFencer, Fencer leftFencer, int rightIndex, int leftIndex) throws Exception {
@@ -20,8 +18,6 @@ public class Bout {
         this.leftFencer = leftFencer;
         this.rightIndex = rightIndex;
         this.leftIndex = leftIndex;
-        this.numEncounters = 2;
-        this.scoreLimit = 15;
 
 
     }
