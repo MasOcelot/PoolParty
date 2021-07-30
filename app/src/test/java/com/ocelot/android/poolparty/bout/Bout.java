@@ -18,6 +18,7 @@ public class Bout {
         this.leftFencer = leftFencer;
         this.rightIndex = rightIndex;
         this.leftIndex = leftIndex;
+        this.stageTracker = new StageTracker();
     }
 
     public Fencer getLeftFencer() {
@@ -34,5 +35,17 @@ public class Bout {
 
     public int getRightIndex() {
         return rightIndex;
+    }
+
+    public void increaseLeft() {
+        if (this.stageTracker.isScoring()) {
+            leftFencer.increaseScore();
+        }
+    }
+
+    public void increaseRight() {
+        if (this.stageTracker.isScoring()) {
+            rightFencer.increaseScore();
+        }
     }
 }

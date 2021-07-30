@@ -14,7 +14,7 @@ public enum Stage {
 
         @Override
         public Stage pauseState() {
-            return this;
+            return PAUSE;
         }
 
         @Override
@@ -24,7 +24,7 @@ public enum Stage {
 
         @Override
         public Stage preBoutState() {
-            return PREBOUT;
+            return this;
         }
 
         @Override
@@ -132,7 +132,7 @@ public enum Stage {
         public Stage nextStage(Bout bout) {
             return null;
         }
-        
+
         @Override
         public Stage encounterState() {
             return ENCOUNTER;

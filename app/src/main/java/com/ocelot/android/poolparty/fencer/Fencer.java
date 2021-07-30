@@ -127,6 +127,10 @@ public class Fencer {
         this.scores[index].increaseScore();
     }
 
+    public void increaseScore() {
+        increaseScore(1);
+    }
+
     public void decreaseScore(int index) {
         this.scores[index].decreaseScore();
     }
