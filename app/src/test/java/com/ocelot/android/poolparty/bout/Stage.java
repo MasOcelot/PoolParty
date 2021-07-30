@@ -3,6 +3,11 @@ package com.ocelot.android.poolparty.bout;
 public enum Stage {
     PREBOUT {
         @Override
+        public Stage nextStage(Bout bout) {
+            return null;
+        }
+
+        @Override
         public Stage encounterState() {
             return ENCOUNTER;
         }
@@ -28,6 +33,11 @@ public enum Stage {
         }
     },
     ENCOUNTER {
+        @Override
+        public Stage nextStage(Bout bout) {
+            return null;
+        }
+
         @Override
         public Stage encounterState() {
             return this;
@@ -56,6 +66,11 @@ public enum Stage {
 
     PAUSE {
         @Override
+        public Stage nextStage(Bout bout) {
+            return null;
+        }
+
+        @Override
         public Stage encounterState() {
             return ENCOUNTER;
         }
@@ -80,7 +95,13 @@ public enum Stage {
             return POSTBOUT;
         }
     },
+
     BREAK {
+        @Override
+        public Stage nextStage(Bout bout) {
+            return null;
+        }
+
         @Override
         public Stage encounterState() {
             return ENCOUNTER;
@@ -107,6 +128,11 @@ public enum Stage {
         }
     },
     POSTBOUT {
+        @Override
+        public Stage nextStage(Bout bout) {
+            return null;
+        }
+        
         @Override
         public Stage encounterState() {
             return ENCOUNTER;
@@ -138,4 +164,6 @@ public enum Stage {
     public abstract Stage pauseState();
     public abstract Stage breakState();
     public abstract Stage postBoutState();
+
+    public abstract Stage nextStage(Bout bout);
 }

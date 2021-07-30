@@ -18,7 +18,21 @@ public class Bout {
         this.leftFencer = leftFencer;
         this.rightIndex = rightIndex;
         this.leftIndex = leftIndex;
+    }
 
+    public Fencer getLeftFencer() {
+        return leftFencer;
+    }
 
+    public Fencer getRightFencer() {
+        return rightFencer;
+    }
+
+    public int getLeftIndex() {
+        return leftIndex;
+    }
+
+    public int getRightIndex() {
+        return rightIndex;
     }
 }
