@@ -96,15 +96,17 @@ public class BoutTest {
     }
 
     @Test
-    public void testScoreRedCard1() {
+    public void testScoreDoubleYellow() {
         int expectedRightScore = 0;
+        int expectedRightYellow = 1;
         int expectedLeftScore = 1;
-        
+
         bout.cardRight(CardType.YELLOW);
         bout.cardRight(CardType.YELLOW);
 
         assertEquals(expectedLeftScore, bout.getLeftScore().value());
         assertEquals(expectedRightScore, bout.getRightScore().value());
+        assertEquals(expectedRightYellow, bout.getRightScore().getCards().getYellow());
     }
 
 }
