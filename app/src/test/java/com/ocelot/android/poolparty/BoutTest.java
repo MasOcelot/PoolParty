@@ -1,6 +1,7 @@
 package com.ocelot.android.poolparty;
 
 import com.ocelot.android.poolparty.bout.Bout;
+import com.ocelot.android.poolparty.bout.Side;
 import com.ocelot.android.poolparty.fencer.CardType;
 import com.ocelot.android.poolparty.fencer.Fencer;
 import com.ocelot.android.poolparty.fencer.FencerID;
@@ -24,9 +25,9 @@ public class BoutTest {
     public void setUp() {
         id1 = new FencerID("Mark", "Hamill", Hand.RIGHT);
         id2 = new FencerID("Harrison", "Ford", Hand.RIGHT);
-        fencer1 = new Fencer(id1);
+        fencer1 = new Fencer(id1, 6);
         fencer1.setIndex(rightIndex);
-        fencer2 = new Fencer(id2);
+        fencer2 = new Fencer(id2, 6);
         fencer2.setIndex(leftIndex);
         try {
             bout = new Bout(fencer1, fencer2, fencer1.getIndex(), fencer2.getIndex());
@@ -58,7 +59,7 @@ public class BoutTest {
         int expectedScore = 0;
 
         bout.decreaseLeft();
-        assertEquals(expectedScore, bout.getLeftScore().getValue());
+        assertEquals(expectedScore, bout.getScore(Side.LEFT));
     }
 
     @Test
@@ -70,15 +71,15 @@ public class BoutTest {
             i--;
         }
         bout.decreaseLeft();
-        assertEquals(expectedScore, bout.getLeftScore().value());
+        assertEquals(expectedScore, bout.getScore(Side.LEFT));
     }
 
     @Test
     public void testScorePositive() {
         int expectedScore = 1;
 
-        bout.increaseLeft();
-        assertEquals(expectedScore, bout.getLeftScore().value());
+        bout.increaseScore(Side.LEFT);
+        assertEquals(expectedScore, bout.getScore(Side.LEFT));
     }
 
     @Test
@@ -86,10 +87,10 @@ public class BoutTest {
         int expectedRightScore = 2;
         int expectedLeftScore = 0;
         bout.increaseRight();
-        bout.cardLeft(CardType.RED);
+        bout.addCard(Side.LEFT, CardType.RED);
 
-        assertEquals(expectedLeftScore, bout.getLeftScore().value());
-        assertEquals(expectedRightScore, bout.getRightScore().value());
+        assertEquals(expectedLeftScore, bout.getScore(Side.LEFT));
+        assertEquals(expectedRightScore, bout.getScore(Side.RIGHT));
     }
 
     @Test
@@ -98,12 +99,12 @@ public class BoutTest {
         int expectedRightYellow = 1;
         int expectedLeftScore = 1;
 
-        bout.cardRight(CardType.YELLOW);
-        bout.cardRight(CardType.YELLOW);
+        bout.addCard(Side.RIGHT, CardType.YELLOW);
+        bout.addCard(Side.RIGHT, CardType.YELLOW);
 
-        assertEquals(expectedLeftScore, bout.getLeftScore().value());
-        assertEquals(expectedRightScore, bout.getRightScore().value());
-        assertEquals(expectedRightYellow, bout.getRightScore().getCards().getYellow());
+        assertEquals(expectedLeftScore, bout.getScore(Side.LEFT));
+        assertEquals(expectedRightScore, bout.getScore(Side.RIGHT));
+        assertEquals(expectedRightYellow, bout.getCardCount(Side.RIGHT, CardType.YELLOW));
     }
 
 }

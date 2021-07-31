@@ -1,6 +1,10 @@
 package com.ocelot.android.poolparty.bout;
 
+import androidx.annotation.NonNull;
+
+import com.ocelot.android.poolparty.fencer.CardType;
 import com.ocelot.android.poolparty.fencer.Fencer;
+import com.ocelot.android.poolparty.fencer.Score;
 
 public class Bout {
 
@@ -38,14 +42,158 @@ public class Bout {
     }
 
     public void increaseLeft() {
-        if (this.stageTracker.isScoring()) {
-            leftFencer.increaseScore();
+        if (leftFencer != null){
+            if (this.stageTracker.isScoring()) {
+                leftFencer.increaseScore(rightIndex);
+            }
         }
     }
 
     public void increaseRight() {
-        if (this.stageTracker.isScoring()) {
-            rightFencer.increaseScore();
+        if (rightFencer != null) {
+            if (this.stageTracker.isScoring()) {
+                rightFencer.increaseScore(leftIndex);
+            }
         }
+    }
+
+    public void decreaseLeft() {
+        if (leftFencer != null) {
+            if (this.stageTracker.isScoring()) {
+                leftFencer.decreaseScore(rightIndex);
+            }
+        }
+    }
+
+    public void decreaseRight() {
+        if (rightFencer != null) {
+            if (this.stageTracker.isScoring()) {
+                rightFencer.decreaseScore(leftIndex);
+            }
+        }
+    }
+
+    public void increaseScore(Side side) {
+        switch (side) {
+            case LEFT:
+                this.increaseLeft();
+                break;
+            case RIGHT:
+                this.increaseRight();
+                break;
+            case BOTH:
+                this.increaseRight();
+                this.increaseLeft();
+                break;
+        }
+    }
+
+    private Score getLeftScore() {
+        if (leftFencer == null) {
+            return null;
+        }
+        return leftFencer.getScores()[rightIndex];
+    }
+
+    private Score getRightScore() {
+        if (rightFencer == null) {
+            return null;
+        }
+        return rightFencer.getScores()[leftIndex];
+    }
+
+    public int getScore(Side side) {
+        Score score = null;
+        switch (side) {
+            case RIGHT:
+                score = this.getRightScore();
+                break;
+            case LEFT:
+                score = this.getLeftScore();
+                break;
+        }
+        if (score != null) {
+            return score.getValue();
+        }
+        return -1;
+    }
+
+    private CardType cardLeft(CardType cardType) {
+        if (leftFencer != null) {
+            return this.getLeftFencer().addCard(rightIndex, cardType);
+        }
+        return CardType.NONE;
+    }
+
+    private CardType cardRight(CardType cardType) {
+        if (rightFencer != null) {
+            return this.getRightFencer().addCard(leftIndex, cardType);
+        }
+        return CardType.NONE;
+    }
+
+    public void addCard(Side side, CardType cardType) {
+        CardType cardResult = CardType.NONE;
+        switch (side) {
+            case LEFT:
+                cardResult = this.cardLeft(cardType);
+                break;
+            case RIGHT:
+                cardResult = this.cardRight(cardType);
+                break;
+        }
+        this.processCardResult(side, cardResult);
+    }
+
+    public int getCardCount(Side side, CardType cardType) {
+        Score score = null;
+        switch (side) {
+            case RIGHT:
+                score = this.getRightScore();
+                break;
+            case LEFT:
+                score = this.getLeftScore();
+                break;
+        }
+        if (score != null) {
+            switch (cardType) {
+                case NONE:
+                    return -1;
+                case YELLOW:
+                    return score.getCards().getYellow();
+                case RED:
+                    return score.getCards().getRed();
+                case BLACK:
+                    return score.getCards().getBlack();
+            }
+        }
+        return -1;
+    }
+
+    private void processCardResult(Side side, CardType cardType) {
+        if (side == Side.BOTH) {
+            return;
+        }
+        switch (cardType) {
+            case YELLOW:
+                return;
+            case RED:
+                Side oppositeSide = Side.NEITHER;
+                if (side == Side.LEFT) {
+                    oppositeSide = Side.RIGHT;
+                } else if (side == Side.RIGHT) {
+                    oppositeSide = Side.LEFT;
+                }
+                this.increaseScore(oppositeSide);
+            case BLACK:
+                endBout();
+                return;
+            case NONE:
+                break;
+        }
+    }
+
+    public void endBout() {
+        return;
     }
 }
