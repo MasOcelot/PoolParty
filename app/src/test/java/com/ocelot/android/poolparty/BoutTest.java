@@ -13,13 +13,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BoutTest {
-    private FencerID id1;
-    private FencerID id2;
-    private Fencer fencer1;
-    private Fencer fencer2;
-    private Bout bout;
-    private int rightIndex = 3;
-    private int leftIndex = 5;
+    FencerID id1;
+    FencerID id2;
+    Fencer fencer1;
+    Fencer fencer2;
+    Bout bout;
+    int rightIndex = 3;
+    int leftIndex = 5;
 
     @Before
     public void setUp() {
@@ -86,11 +86,14 @@ public class BoutTest {
     public void testScoreRedCard0() {
         int expectedRightScore = 2;
         int expectedLeftScore = 0;
+        int expectedLeftRed = 1;
+
         bout.increaseRight();
         bout.addCard(Side.LEFT, CardType.RED);
 
         assertEquals(expectedLeftScore, bout.getScore(Side.LEFT));
         assertEquals(expectedRightScore, bout.getScore(Side.RIGHT));
+        assertEquals(expectedLeftRed, bout.getCardCount(Side.LEFT, CardType.RED));
     }
 
     @Test

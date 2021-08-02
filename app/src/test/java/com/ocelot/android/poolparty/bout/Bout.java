@@ -8,11 +8,11 @@ import com.ocelot.android.poolparty.fencer.Score;
 
 public class Bout {
 
-    private Fencer rightFencer;
-    private Fencer leftFencer;
-    private int rightIndex;
-    private int leftIndex;
-    private StageTracker stageTracker;
+    private final Fencer rightFencer;
+    private final Fencer leftFencer;
+    private final int rightIndex;
+    private final int leftIndex;
+    private final StageTracker stageTracker;
 
     public Bout(Fencer rightFencer, Fencer leftFencer, int rightIndex, int leftIndex) throws Exception {
         if (rightIndex == leftIndex) {
@@ -119,14 +119,14 @@ public class Bout {
     }
 
     private CardType cardLeft(CardType cardType) {
-        if (leftFencer != null) {
+        if (leftFencer != null && this.stageTracker.isCarding()) {
             return this.getLeftFencer().addCard(rightIndex, cardType);
         }
         return CardType.NONE;
     }
 
     private CardType cardRight(CardType cardType) {
-        if (rightFencer != null) {
+        if (rightFencer != null && this.stageTracker.isCarding()) {
             return this.getRightFencer().addCard(leftIndex, cardType);
         }
         return CardType.NONE;
