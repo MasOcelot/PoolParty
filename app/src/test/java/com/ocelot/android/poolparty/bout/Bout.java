@@ -22,7 +22,7 @@ public class Bout {
         this.leftFencer = leftFencer;
         this.rightIndex = rightIndex;
         this.leftIndex = leftIndex;
-        this.stageTracker = new StageTracker();
+        this.stageTracker = new StageTracker(this);
     }
 
     public Fencer getLeftFencer() {
