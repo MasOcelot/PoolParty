@@ -43,7 +43,7 @@ public class Bout {
 
     public void increaseLeft() {
         if (leftFencer != null){
-            if (this.stageTracker.isScoring()) {
+            if (this.stageTracker.isScoring() && stageTracker.getScoreLimit() > 0) {
                 leftFencer.increaseScore(rightIndex);
             }
         }
@@ -51,9 +51,17 @@ public class Bout {
 
     public void increaseRight() {
         if (rightFencer != null) {
-            if (this.stageTracker.isScoring()) {
+            if (this.stageTracker.isScoring() && stageTracker.getScoreLimit() > 0) {
                 rightFencer.increaseScore(leftIndex);
             }
+        }
+    }
+
+    public void doubleTouch() {
+        if (stageTracker.getScoreLimit() != 0 ||
+                (getLeftScore().getValue() == getRightScore().getValue()) && (getLeftScore().getValue() != stageTracker.getScoreLimit()-1)) {
+            increaseLeft();
+            increaseRight();
         }
     }
 

@@ -3,7 +3,7 @@ package com.ocelot.android.poolparty.bout;
 import android.os.CountDownTimer;
 
 public class StageTracker {
-    private static Stage stage;
+    private Stage stage;
     private int scoreLimit;
     private int maxEncounters;
     private int encounter;
@@ -19,7 +19,7 @@ public class StageTracker {
 
     public StageTracker(Bout bout, long timeAction, long timeBreak, long timeCard) {
         this.stage = Stage.PREBOUT;
-        this.scoreLimit = 15;
+        this.scoreLimit = 0;
         this.maxEncounters = 3;
         this.encounter = 0;
         this.carding = true;
@@ -34,24 +34,13 @@ public class StageTracker {
         this(bout, 180000, 60000, 60000);
     }
 
-    public void nextStage() {
-        switch (this.stage) {
-            case PREBOUT:
-                this.stage = stage.pauseState();
-                encounter++;
-                return;
-            case PAUSE:
-                return;
-        }
+    public void setScoreLimit(int scoreLimit) {
+        this.scoreLimit = scoreLimit;
     }
 
-    private void actionFinish() {
-        if (stage == Stage.ENCOUNTER) {
-            if (encounter < maxEncounters) {
-                stage.breakState();
-            }
-        }
-    };
+    public int getScoreLimit() {
+        return scoreLimit;
+    }
 
     private void initiateTimers() {
         this.actionTimer = new CountDownTimer(timeAction, 1) {
@@ -62,7 +51,7 @@ public class StageTracker {
 
             @Override
             public void onFinish() {
-                actionFinish();
+                handlePeriodTime();
             }
         };
 
@@ -99,19 +88,17 @@ public class StageTracker {
         return carding;
     }
 
-    private void setStage(Stage newStage) {
+    private void enterStage(Stage newStage) {
         switch (newStage) {
             case PREBOUT:
                 abcCardScore(false, false, false, false, false);
                 break;
+            case POSTBOUT:
             case PAUSE:
                 abcCardScore(false, false, false, true, true);
                 break;
             case ENCOUNTER:
-                abcCardScore(true, false, false, false, false);
-                break;
-            case POSTBOUT:
-                abcCardScore(false, false, false, true, true);
+                abcCardScore(true, false, true, false, false);
                 break;
             case BREAK:
                 abcCardScore(false, true, false, true, true);
@@ -138,5 +125,89 @@ public class StageTracker {
         }
         this.carding = carding;
         this.scoring = scoring;
+    }
+
+    public void handlePostInit() {
+        switch (stage) {
+            case PREBOUT:
+                enterStage(Stage.PAUSE);
+        }
+    }
+
+    public void handleStartActionTimer() {
+        switch (stage) {
+            case PAUSE:
+                enterStage(Stage.ENCOUNTER);
+        }
+
+    }
+
+    public void handlePauseActionTimer() {
+        switch (stage) {
+            case ENCOUNTER:
+                enterStage(Stage.PAUSE);
+        }
+
+    }
+
+    public void handlePeriodScore() {
+        switch (stage) {
+            case ENCOUNTER:
+                if (encounter < maxEncounters-1) {
+                    enterStage(Stage.BREAK);
+                } else {
+                    enterStage(Stage.POSTBOUT);
+                }
+                break;
+        }
+    }
+
+    public void handlePeriodTime() {
+        switch (stage) {
+            case ENCOUNTER:
+                if (encounter < maxEncounters-1) {
+                    enterStage(Stage.BREAK);
+                } else {
+                    enterStage(Stage.POSTBOUT);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void handleEndBreakTime() {
+        switch (stage) {
+            case BREAK:
+                encounter++;
+                enterStage(Stage.PAUSE);
+        }
+    }
+
+    public void handleSkipBreak() {
+        switch (stage) {
+            case BREAK:
+                encounter++;
+                enterStage(Stage.PAUSE);
+        }
+    }
+
+    public void handleScoreLimit() {
+        switch (stage) {
+            case PAUSE:
+            case ENCOUNTER:
+            case BREAK:
+                enterStage(Stage.POSTBOUT);
+        }
+    }
+
+    public void resetBout() {
+        switch (stage) {
+            case PAUSE:
+            case BREAK:
+            case POSTBOUT:
+                encounter = 0;
+
+        }
     }
 }
