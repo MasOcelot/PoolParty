@@ -1,0 +1,87 @@
+package com.ocelot.android.poolparty.bout;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class TimerTrackerTest {
+    TimerTracker timerTracker;
+    long startTimeMS = 180000;
+    long tickRateMS = 10;
+
+    @Before
+    public void setUp() {
+        timerTracker = new TimerTracker(startTimeMS, tickRateMS);
+    }
+
+    @Test
+    public void testTimerConstructor() {
+        long expectedCurrentTime = 180000;
+        TimeState expectedTimerState = TimeState.RESET;
+
+        assertEquals(expectedTimerState, timerTracker.getState());
+        assertEquals(expectedCurrentTime, timerTracker.getCurrentTime());
+    }
+
+    @Test
+    public void testSetTime() {
+        long expectedTime0 = 65000;
+        long expectedTime1 = 42500;
+        long expectedTime2 = 0;
+        TimeState expectedTimerState = TimeState.PAUSED;
+        timerTracker.setCurrentTime(65000);
+        assertEquals(expectedTime0, timerTracker.getCurrentTime());
+        assertEquals(expectedTimerState, timerTracker.getState());
+        timerTracker.setCurrentTime(42500);
+        assertEquals(expectedTime1, timerTracker.getCurrentTime());
+        timerTracker.setCurrentTime(-1000);
+        assertEquals(expectedTime1, timerTracker.getCurrentTime());
+        timerTracker.setCurrentTime(0);
+        assertEquals(expectedTime2, timerTracker.getCurrentTime());
+    }
+
+    @Test
+    public void testWaitTime() {
+
+    }
+
+    @Test
+    public void testResetTimer() {
+        int expectedTime0 = 30000;
+        int expectedTime1 = 180000;
+        TimeState expectedTimerState = TimeState.RESET;
+
+        timerTracker.setCurrentTime(30000);
+        assertEquals(expectedTime0, timerTracker.getCurrentTime());
+        timerTracker.resetTime();
+        assertEquals(expectedTime1, timerTracker.getCurrentTime());
+        assertEquals(expectedTimerState, timerTracker.getState());
+    }
+/**
+    @Test
+    public void testTimeout() throws InterruptedException {
+        int expectedTime = 0;
+        TimeState expectedTimerState = TimeState.TIMEOUT;
+
+        boutTimer.setCurrentTime(3000);
+        boutTimer.startTimer();
+        // wait 3 seconds
+        Thread.sleep(3100);
+        assertEquals(expectedTime, boutTimer.getCurrentTime());
+        assertEquals(expectedTimerState, boutTimer.getState());
+    }
+ **/
+
+    @Test
+    public void testRunningState() {
+        TimeState expectedTimerState0 = TimeState.RUNNING;
+        TimeState expectedTimerState1 = TimeState.PAUSED;
+
+        timerTracker.startTimer();
+        assertEquals(expectedTimerState0, timerTracker.getState());
+        timerTracker.pauseTimer();
+        assertEquals(expectedTimerState1, timerTracker.getState());
+    }
+
+}
