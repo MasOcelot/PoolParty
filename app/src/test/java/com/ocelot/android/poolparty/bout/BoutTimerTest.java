@@ -8,8 +8,7 @@ import static org.junit.Assert.*;
 public class BoutTimerTest {
     BoutTimer boutTimer;
     long startTimeMS = 180000;
-    long tickRateMS = 1;
-
+    long tickRateMS = 10;
 
     @Before
     public void setUp() {
@@ -19,27 +18,27 @@ public class BoutTimerTest {
     @Test
     public void testTimerConstructor() {
         long expectedCurrentTime = 180000;
-        TimerState expectedTimerState = TimerState.RESET;
+        TimeState expectedTimerState = TimeState.RESET;
 
-        assertEquals(expectedTimerState, boutTimer.getState);
-        assertEquals(expectedCurrentTime, boutTimer.getCurrTime);
+        assertEquals(expectedTimerState, boutTimer.getState());
+        assertEquals(expectedCurrentTime, boutTimer.getCurrentTime());
     }
 
     @Test
     public void testSetTime() {
-        int expectedTime0 = 65000;
-        int expectedTime1 = 42500;
-        int expectedTime2 = 0;
-        TimerState expectedTimerState = TimerState.PAUSED;
-        boutTimer.setCurrTime(65000);
-        assertEquals(expectedTime0, boutTimer.getCurrTime());
+        long expectedTime0 = 65000;
+        long expectedTime1 = 42500;
+        long expectedTime2 = 0;
+        TimeState expectedTimerState = TimeState.PAUSED;
+        boutTimer.setCurrentTime(65000);
+        assertEquals(expectedTime0, boutTimer.getCurrentTime());
         assertEquals(expectedTimerState, boutTimer.getState());
-        boutTimer.setCurrTime(42500);
-        assertEquals(expectedTime1, boutTimer.getCurrTime());
-        boutTimer.setCurrTime(-1000);
-        assertEquals(expectedTime1, boutTimer.getCurrTime());
-        boutTimer.setCurrTime(0);
-        assertEquals(expectedTime2, boutTimer.getCurrTime());
+        boutTimer.setCurrentTime(42500);
+        assertEquals(expectedTime1, boutTimer.getCurrentTime());
+        boutTimer.setCurrentTime(-1000);
+        assertEquals(expectedTime1, boutTimer.getCurrentTime());
+        boutTimer.setCurrentTime(0);
+        assertEquals(expectedTime2, boutTimer.getCurrentTime());
     }
 
     @Test
@@ -51,31 +50,32 @@ public class BoutTimerTest {
     public void testResetTimer() {
         int expectedTime0 = 30000;
         int expectedTime1 = 180000;
-        TimerState expectedTimerState = TimerState.RESET;
+        TimeState expectedTimerState = TimeState.RESET;
 
-        boutTimer.setCurrTime(30000);
-        assertEquals(expectedTime0, boutTimer.getCurrTime());
+        boutTimer.setCurrentTime(30000);
+        assertEquals(expectedTime0, boutTimer.getCurrentTime());
         boutTimer.resetTime();
-        assertEquals(expectedTime1, boutTimer.getCurrTime());
+        assertEquals(expectedTime1, boutTimer.getCurrentTime());
         assertEquals(expectedTimerState, boutTimer.getState());
     }
 
     @Test
     public void testTimeout() throws InterruptedException {
         int expectedTime = 0;
-        TimerState expectedTimerState = TimerState.TIMEOUT;
+        TimeState expectedTimerState = TimeState.TIMEOUT;
 
-        boutTimer.setCurrTime(3000);
+        boutTimer.setCurrentTime(3000);
+        boutTimer.startTimer();
         // wait 3 seconds
         Thread.sleep(3100);
-        assertEquals(expectedTime, boutTimer.getCurrTime());
+        assertEquals(expectedTime, boutTimer.getCurrentTime());
         assertEquals(expectedTimerState, boutTimer.getState());
     }
 
     @Test
     public void testRunningState() {
-        TimerState expectedTimerState0 = TimerState.RUNNING;
-        TimerState expectedTimerState1 = TimerState.PAUSED;
+        TimeState expectedTimerState0 = TimeState.RUNNING;
+        TimeState expectedTimerState1 = TimeState.PAUSED;
 
         boutTimer.startTimer();
         assertEquals(expectedTimerState0, boutTimer.getState());

@@ -9,9 +9,9 @@ public class StageTracker {
     private int encounter;
     private boolean scoring;
     private boolean carding;
-    private CountDownTimer actionTimer;
-    private CountDownTimer breakTimer;
-    private CountDownTimer cardTimer;
+    private BoutTimer actionTimer;
+    private BoutTimer breakTimer;
+    private BoutTimer cardTimer;
     private final long timeBreak;
     private final long timeAction;
     private final long timeCard;
@@ -40,44 +40,6 @@ public class StageTracker {
 
     public int getScoreLimit() {
         return scoreLimit;
-    }
-
-    private void initiateTimers() {
-        this.actionTimer = new CountDownTimer(timeAction, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                handlePeriodTime();
-            }
-        };
-
-        this.breakTimer = new CountDownTimer(timeBreak, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
-
-        this.cardTimer = new CountDownTimer(timeCard, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
     }
 
     public boolean isScoring() {
@@ -109,19 +71,19 @@ public class StageTracker {
 
     private void abcCardScore(boolean action, boolean rest, boolean card, boolean carding, boolean scoring) {
         if (action) {
-            actionTimer.start();
+            actionTimer.startTimer();
         } else {
-            actionTimer.cancel();
+            actionTimer.pauseTimer();
         }
         if (rest) {
-            breakTimer.start();
+            breakTimer.startTimer();
         } else {
-            breakTimer.cancel();
+            breakTimer.pauseTimer();
         }
         if (card) {
-            cardTimer.start();
+            cardTimer.startTimer();
         } else {
-            cardTimer.cancel();
+            cardTimer.pauseTimer();
         }
         this.carding = carding;
         this.scoring = scoring;
