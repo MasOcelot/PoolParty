@@ -12,26 +12,25 @@ public class StageTracker {
     private BoutTimer actionTimer;
     private BoutTimer breakTimer;
     private BoutTimer cardTimer;
-    private final long timeBreak;
-    private final long timeAction;
-    private final long timeCard;
     private Bout bout;
+    private final BreakType breakType;
 
-    public StageTracker(Bout bout, long timeAction, long timeBreak, long timeCard) {
+    public StageTracker(Bout bout, long timeAction, long timeBreak, long timeCard, BreakType breakType) {
+        this.bout = bout;
         this.stage = Stage.PREBOUT;
         this.scoreLimit = 0;
         this.maxEncounters = 3;
         this.encounter = 0;
         this.carding = true;
         this.scoring = true;
-        this.timeAction = timeAction;
-        this.timeBreak = timeBreak;
-        this.timeCard = timeCard;
-        this.bout = bout;
+        this.actionTimer = new BoutTimer(timeAction, 10);
+        this.breakTimer = new BoutTimer(timeBreak, 10);
+        this.cardTimer = new BoutTimer(timeCard, 10);
+        this.breakType = breakType;
     }
 
     public StageTracker(Bout bout) {
-        this(bout, 180000, 60000, 60000);
+        this(bout, 180000, 60000, 60000, BreakType.SCORE);
     }
 
     public void setScoreLimit(int scoreLimit) {
@@ -109,7 +108,6 @@ public class StageTracker {
             case ENCOUNTER:
                 enterStage(Stage.PAUSE);
         }
-
     }
 
     public void handlePeriodScore() {
@@ -169,7 +167,36 @@ public class StageTracker {
             case BREAK:
             case POSTBOUT:
                 encounter = 0;
+        }
+    }
 
+    public void checkScore() {
+        if (this.breakType==BreakType.SCORE && encounter==0){
+            int halfScore = this.scoreLimit/2;
+            if (this.scoreLimit%2 == 1) halfScore+=1;
+            if ((this.bout.getScore(Side.LEFT) == halfScore ||
+                    this.bout.getScore(Side.RIGHT) == halfScore)) {
+                handlePeriodScore();
+            }
+        }
+        if (this.bout.getScore(Side.LEFT) == this.scoreLimit ||
+            this.bout.getScore(Side.RIGHT) == this.scoreLimit) {
+            handleScoreLimit();
+        }
+    }
+
+    public void pauseTimer() {
+        switch (stage) {
+            case ENCOUNTER:
+                enterStage(Stage.PAUSE);
+                break;
+        }
+    }
+
+    public void startTimer() {
+        switch (stage) {
+            case PAUSE:
+                enterStage(Stage.ENCOUNTER);
         }
     }
 }

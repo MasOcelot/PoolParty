@@ -45,6 +45,7 @@ public class Bout {
         if (leftFencer != null){
             if (this.stageTracker.isScoring() && stageTracker.getScoreLimit() > 0) {
                 leftFencer.increaseScore(rightIndex);
+                stageTracker.checkScore();
             }
         }
     }
@@ -53,6 +54,7 @@ public class Bout {
         if (rightFencer != null) {
             if (this.stageTracker.isScoring() && stageTracker.getScoreLimit() > 0) {
                 rightFencer.increaseScore(leftIndex);
+                stageTracker.checkScore();
             }
         }
     }
@@ -203,5 +205,13 @@ public class Bout {
 
     public void endBout() {
         return;
+    }
+
+    public void pauseTimer() {
+        stageTracker.pauseTimer();
+    }
+
+    public void startTimer() {
+        stageTracker.startTimer();
     }
 }
