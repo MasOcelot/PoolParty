@@ -6,11 +6,13 @@ public class Score {
     private int value;
     private boolean victory;
     private Cards cards;
+    private Cards pCards;
 
     public Score(int score) {
         this.value = score;
         this.victory = false;
         this.cards = new Cards();
+        this.pCards = new Cards();
     }
 
     public Score() {
@@ -102,6 +104,50 @@ public class Score {
                 break;
             case BLACK:
                 this.cards.removeBlack();
+                break;
+        }
+    }
+
+    public Cards getPCards() {
+        return this.pCards;
+    }
+
+    public void setPCards(CardType cardType, int numCards) {
+        switch (cardType) {
+            case YELLOW:
+                pCards.setYellow(numCards);
+                break;
+            case RED:
+                pCards.setRed(numCards);
+                break;
+            case BLACK:
+                pCards.setBlack(numCards);
+                break;
+        }
+    }
+
+    public CardType addPCard(CardType card){
+        switch (card) {
+            case YELLOW:
+                return this.pCards.addYellow();
+            case RED:
+                return this.pCards.addRed();
+            case BLACK:
+                return this.pCards.addBlack();
+        }
+        return CardType.NONE;
+    }
+
+    public void removePCard(CardType card) {
+        switch (card) {
+            case YELLOW:
+                this.pCards.removeYellow();
+                break;
+            case RED:
+                this.pCards.removeRed();
+                break;
+            case BLACK:
+                this.pCards.removeBlack();
                 break;
         }
     }

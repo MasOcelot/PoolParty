@@ -203,15 +203,13 @@ public class Bout {
         }
     }
 
+    public void resetScores() {
+        leftFencer.setScore(rightIndex, 0);
+        rightFencer.setScore(leftIndex, 0);
+    }
+
     public void endBout() {
         return;
     }
 
-    public void pauseTimer() {
-        stageTracker.pauseTimer();
-    }
-
-    public void startTimer() {
-        stageTracker.startTimer();
-    }
 }

@@ -167,6 +167,10 @@ public class StageTracker {
             case BREAK:
             case POSTBOUT:
                 encounter = 0;
+                bout.resetScores();
+                if (actionTimer != null) actionTimer.resetTime();
+                if (breakTimer != null) breakTimer.resetTime();
+                if (cardTimer != null) cardTimer.resetTime();
         }
     }
 
@@ -189,6 +193,7 @@ public class StageTracker {
         switch (stage) {
             case ENCOUNTER:
                 enterStage(Stage.PAUSE);
+                handlePauseActionTimer();
                 break;
         }
     }
@@ -197,6 +202,7 @@ public class StageTracker {
         switch (stage) {
             case PAUSE:
                 enterStage(Stage.ENCOUNTER);
+                handleStartActionTimer();
         }
     }
 }
