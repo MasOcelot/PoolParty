@@ -12,7 +12,6 @@ public class Bout {
     private final Fencer leftFencer;
     private final int rightIndex;
     private final int leftIndex;
-    private final StageTracker stageTracker;
 
     public Bout(Fencer rightFencer, Fencer leftFencer, int rightIndex, int leftIndex) throws Exception {
         if (rightIndex == leftIndex) {
@@ -22,7 +21,6 @@ public class Bout {
         this.leftFencer = leftFencer;
         this.rightIndex = rightIndex;
         this.leftIndex = leftIndex;
-        this.stageTracker = new StageTracker(this);
     }
 
     public Fencer getLeftFencer() {
@@ -43,43 +41,30 @@ public class Bout {
 
     public void increaseLeft() {
         if (leftFencer != null){
-            if (this.stageTracker.isScoring() && stageTracker.getScoreLimit() > 0) {
-                leftFencer.increaseScore(rightIndex);
-                stageTracker.checkScore();
-            }
+            leftFencer.increaseScore(rightIndex);
         }
     }
 
     public void increaseRight() {
         if (rightFencer != null) {
-            if (this.stageTracker.isScoring() && stageTracker.getScoreLimit() > 0) {
-                rightFencer.increaseScore(leftIndex);
-                stageTracker.checkScore();
-            }
+            rightFencer.increaseScore(leftIndex);
         }
     }
 
     public void doubleTouch() {
-        if (stageTracker.getScoreLimit() != 0 ||
-                (getLeftScore().getValue() == getRightScore().getValue()) && (getLeftScore().getValue() != stageTracker.getScoreLimit()-1)) {
-            increaseLeft();
-            increaseRight();
-        }
+        increaseLeft();
+        increaseRight();
     }
 
     public void decreaseLeft() {
         if (leftFencer != null) {
-            if (this.stageTracker.isScoring()) {
-                leftFencer.decreaseScore(rightIndex);
-            }
+            leftFencer.decreaseScore(rightIndex);
         }
     }
 
     public void decreaseRight() {
         if (rightFencer != null) {
-            if (this.stageTracker.isScoring()) {
-                rightFencer.decreaseScore(leftIndex);
-            }
+            rightFencer.decreaseScore(leftIndex);
         }
     }
 
@@ -129,17 +114,11 @@ public class Bout {
     }
 
     private CardType cardLeft(CardType cardType) {
-        if (leftFencer != null && this.stageTracker.isCarding()) {
-            return this.getLeftFencer().addCard(rightIndex, cardType);
-        }
-        return CardType.NONE;
+        return this.getLeftFencer().addCard(rightIndex, cardType);
     }
 
     private CardType cardRight(CardType cardType) {
-        if (rightFencer != null && this.stageTracker.isCarding()) {
-            return this.getRightFencer().addCard(leftIndex, cardType);
-        }
-        return CardType.NONE;
+        return this.getRightFencer().addCard(leftIndex, cardType);
     }
 
     public void addCard(Side side, CardType cardType) {
